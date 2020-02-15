@@ -1,4 +1,4 @@
-# Bus Feedback App (Client Repo)
+# Bus Feedback App (Server Repo)
 
 * Ever sit on a bus on your commute to work and witness an accident on the bus due to the driver?
 * Ever have a passenger abuse another passenger or the driver?
