@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import Form from './Form.js'
+import Form from './components/Form/Form.js'
+import Map from './components/Map/Map.js'
+import './App.scss'
 
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      route: null,
-      busNumber: null,
+      route: '',
+      busNumber: '',
       timestamp: Date.now()
     }
   }
@@ -20,18 +22,23 @@ class App extends Component {
       }))
       return
     }
-    const num = parseInt(value)
-    this.setState(() => ({
-      [name]: num
-    }))
+    // const num = parseInt(value)
+    // this.setState(() => ({
+    //   [name]: num
+    // }))
   }
 
   render() {
     return (
-      <div>
-        <h1>Hello React; it's been nearly a year!!</h1>
+      <>
+      <div className="app">
+        <h1 class="main-title">Hello React; it's been nearly a year!!</h1>
         <Form {...this.state} handleChange={this.handleChange}/>
       </div>
+      <div>
+        <Map />
+      </div>
+      </>
     )
   }
 }
