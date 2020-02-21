@@ -1,9 +1,10 @@
-.main-title {
-  text-align: center;
+#root div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .app {
   background: lightgoldenrodyellow;
-  // border: 2px solid goldenrod;
   padding: 10px;
 }

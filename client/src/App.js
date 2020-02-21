@@ -22,10 +22,6 @@ class App extends Component {
       }))
       return
     }
-    // const num = parseInt(value)
-    // this.setState(() => ({
-    //   [name]: num
-    // }))
   }
 
   render() {
