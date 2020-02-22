@@ -13259,14 +13259,6 @@ video {
           transition-duration: 1000ms;
 }
 
-/* body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-} */
-
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;
@@ -63834,5 +63826,3 @@ video {
             transition-duration: 1000ms;
   }
 }
-
-
