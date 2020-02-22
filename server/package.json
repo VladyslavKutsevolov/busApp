@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node ./index.js",
-    "server": "PORT=3000 nodemon ./index.js",
+    "server": "PORT=5000 nodemon ./index.js",
     "client": "PORT=3001 npm start --prefix ../client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
