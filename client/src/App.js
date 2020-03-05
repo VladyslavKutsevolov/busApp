@@ -1,42 +1,61 @@
-import React, { Component } from 'react'
-import Form from './components/Form/Form.js'
-import Map from './components/Map/Map.js'
+import React, { Component } from "react";
+import Form from "./components/Form/Form";
+import Map from "./components/Map/Map.js";
 // import './App.scss'
-
 
 class App extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      route: '',
-      busNumber: '',
+      route: "",
+      busData: [],
       timestamp: Date.now()
-    }
+    };
   }
 
-  handleChange = (e) => {
-    const { name, value } = e.target
-    if(isNaN(value)) {
-      this.setState(() => ({
-        [name]: 0
-      }))
-      return
-    }
+  componentDidMount() {
+    this.fetchRoutes();
   }
+
+  fetchRoutes = () => {
+    fetch("/api/routes")
+      .then(rsp => rsp.json())
+      .then(allRoutes => {
+        this.allRoutes = allRoutes;
+        this.getBusNumber();
+      });
+  };
+
+  getBusNumber = () => {
+    if (this.allRoutes) {
+      const busData = this.allRoutes;
+      this.setState({ busData });
+    }
+  };
+
+  handleChange = e => {
+    const { value } = e.target;
+    this.setState({
+      route: [value]
+    });
+  };
 
   render() {
     return (
       <>
-      <div className="app p-6">
-        <h1 className="text-3xl pb-4 text-center">BusApp</h1>
-        <Form {...this.state} handleChange={this.handleChange}/>
-      </div>
-      <div>
-        <Map />
-      </div>
+        <div className="app p-6">
+          <h1 className="text-3xl pb-4 text-center">BusApp</h1>
+          <Form
+            handleChange={this.handleChange}
+            allRoutes={this.state.busData}
+          />
+        </div>
+        <div>
+          <Map />
+        </div>
       </>
-    )
+    );
   }
 }
 
-export default App
+export default App;
