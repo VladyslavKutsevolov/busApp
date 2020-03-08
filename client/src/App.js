@@ -33,10 +33,9 @@ class App extends Component {
     }
   };
 
-  handleChange = e => {
-    const { value } = e.target;
+  handleChange = route => {
     this.setState({
-      route: [value]
+      route
     });
   };
 
@@ -46,6 +45,7 @@ class App extends Component {
         <div className="app p-6">
           <h1 className="text-3xl pb-4 text-center">BusApp</h1>
           <Form
+            route={this.state.route}
             handleChange={this.handleChange}
             allRoutes={this.state.busData}
           />

@@ -34,11 +34,13 @@ export default class AutoComplete extends Component {
       activeSuggestions: 0,
       filteredSuggestions,
       shownSuggestions: true,
-      userInput: userInput
+      userInput
     });
   };
 
   onClick = e => {
+    const { handleChange } = this.props;
+    handleChange(e.target.innerText);
     this.setState({
       activeSuggestions: 0,
       filteredSuggestions: [],
@@ -79,18 +81,23 @@ export default class AutoComplete extends Component {
       }
     } = this;
     const { handleChange } = this.props;
+    const ulMinHeight =
+      filteredSuggestions.length > 5 ? "h-48" : filteredSuggestions.length;
     let suggestionsListComponent;
 
     if (shownSuggestions && userInput) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul className="suggestions">
+          <ul
+            className={`${ulMinHeight} suggestions cursor-pointer bg-gray-100 mt-3 rounded-lg shadow-md bg-scroll overflow-auto`}
+          >
             {filteredSuggestions.map((suggestion, index) => {
-              let className;
+              let className =
+                "block py-2 px-4 text-gray-800 hover:bg-indigo-500";
 
-              if (index === activeSuggestions) {
-                className = "suggestion-active";
-              }
+              // if (index === activeSuggestions) {
+              //   className += "suggestion-active";
+              // }
 
               return (
                 <li key={index} className={className} onClick={onClick}>
