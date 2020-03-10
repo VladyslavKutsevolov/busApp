@@ -38,7 +38,7 @@ export default function Modal({ show, route, closeModal }) {
 
             {/* <!--Body--> */}
             <form>
-              <div className="container mx-auto bg-gray-200 rounded px-8 pt-6 pb-8">
+              <div className="container mx-auto rounded px-8 pt-6 pb-8">
                 <label className="block mb-3" htmlFor="name">
                   <span className="text-gray-700">Name:</span>
                   <input
@@ -58,7 +58,7 @@ export default function Modal({ show, route, closeModal }) {
                 <label htmlFor="textarea" className="block">
                   <span className="text-gray-700 mb-2">You Comment</span>
                   <textarea
-                    className="block text-grey-darkest flex-1 p-2 m-1 w-full h-24"
+                    className="block border rounded text-grey-darkest flex-1 p-2 m-1 w-full h-24"
                     name="comment"
                     id="comment"
                     cols="30"
