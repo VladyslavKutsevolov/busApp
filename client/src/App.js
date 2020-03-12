@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import Form from "./components/Form/Form";
 import Map from "./components/Map/Map.js";
-// import './App.scss'
+import AllPosts from "./components/Form/AllPosts";
+import axios from "axios";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       route: "",
-      busData: [],
-      timestamp: Date.now()
+      busData: []
     };
   }
 
   componentDidMount() {
     this.fetchRoutes();
+    console.log(this.state.AllPosts);
   }
 
   fetchRoutes = () => {
@@ -23,6 +24,7 @@ class App extends Component {
       .then(allRoutes => {
         this.allRoutes = allRoutes;
         this.getBusNumber();
+        this.getAllPosts();
       });
   };
 
@@ -31,6 +33,14 @@ class App extends Component {
       const busData = this.allRoutes;
       this.setState({ busData });
     }
+  };
+
+  getAllPosts = () => {
+    axios
+      .get("/api/posts")
+      .then(posts => posts.data)
+      .then(data => this.setState({ allPosts: data }))
+      .catch(err => console.log(err));
   };
 
   handleChange = route => {
@@ -49,6 +59,7 @@ class App extends Component {
             handleChange={this.handleChange}
             allRoutes={this.state.busData}
           />
+          <AllPosts posts={this.state.allPosts} />
         </div>
         <div>
           <Map />

@@ -37,5 +37,9 @@
   "devDependencies": {
     "tailwindcss": "^1.2.0"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": {
+    "/config": {
+      "target": "http://localhost:5000"
+    }
+  }
 }
