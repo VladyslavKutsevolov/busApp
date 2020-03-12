@@ -9,13 +9,13 @@ class App extends Component {
     super();
     this.state = {
       route: "",
-      busData: []
+      busData: [],
+      allPosts: []
     };
   }
 
   componentDidMount() {
     this.fetchRoutes();
-    console.log(this.state.AllPosts);
   }
 
   fetchRoutes = () => {
@@ -23,23 +23,23 @@ class App extends Component {
       .then(rsp => rsp.json())
       .then(allRoutes => {
         this.allRoutes = allRoutes;
+        this.fetchAllPosts();
         this.getBusNumber();
-        this.getAllPosts();
       });
   };
 
   getBusNumber = () => {
     if (this.allRoutes) {
       const busData = this.allRoutes;
-      this.setState({ busData });
+      this.setState({ ...this.state, busData });
     }
   };
 
-  getAllPosts = () => {
-    axios
+  fetchAllPosts = () => {
+    return axios
       .get("/api/posts")
       .then(posts => posts.data)
-      .then(data => this.setState({ allPosts: data }))
+      .then(allPosts => this.setState({ ...this.state, allPosts }))
       .catch(err => console.log(err));
   };
 
@@ -59,7 +59,7 @@ class App extends Component {
             handleChange={this.handleChange}
             allRoutes={this.state.busData}
           />
-          <AllPosts posts={this.state.allPosts} />
+          <AllPosts posts={this.state.allPosts} route={this.state.route} />
         </div>
         <div>
           <Map />
