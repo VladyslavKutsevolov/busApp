@@ -15,7 +15,7 @@ class Modal extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { route } = this.props;
+    const { route, closeModal } = this.props;
     const newPost = {
       name: this.state.name,
       reason: this.state.reason,
@@ -27,6 +27,8 @@ class Modal extends Component {
       .post("/api/posts/add", newPost)
       .then(res => res)
       .catch(err => console.log(err));
+
+    closeModal();
   };
 
   render() {
