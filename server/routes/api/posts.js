@@ -16,7 +16,7 @@ router.post("/add", (req, res) => {
   const newPost = new Post({
     name: req.body.name,
     reason: req.body.reason,
-    comment: req.body.reason,
+    comment: req.body.comment,
     route: req.body.route
   });
 
