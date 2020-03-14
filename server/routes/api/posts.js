@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.post("/add", (req, res) => {
+router.post("/", (req, res) => {
   const newPost = new Post({
     name: req.body.name,
     reason: req.body.reason,

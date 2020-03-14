@@ -37,7 +37,7 @@ class App extends Component {
 
   handleChange = route => {
     this.setState({
-      route
+      route: route
     });
   };
 

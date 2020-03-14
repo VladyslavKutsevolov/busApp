@@ -21,7 +21,7 @@ export default class AutoComplete extends Component {
     };
   }
 
-  onChange = ({target}) => {
+  onChange = ({ target }) => {
     const { suggestions } = this.props;
     const userInput = target.value;
     const filteredSuggestions = suggestions
@@ -38,7 +38,7 @@ export default class AutoComplete extends Component {
     });
   };
 
-  onClick = ({target}) => {
+  onClick = ({ target }) => {
     const { handleChange } = this.props;
     handleChange(target.innerText);
     this.setState({
@@ -49,7 +49,7 @@ export default class AutoComplete extends Component {
     });
   };
 
-  onKeyDown = ({keyCode}) => {
+  onKeyDown = ({ keyCode }) => {
     const { activeSuggestions, filteredSuggestions } = this.state;
 
     if (keyCode === 13) {
@@ -58,7 +58,7 @@ export default class AutoComplete extends Component {
         shownSuggestions: false,
         userInput: filteredSuggestions[activeSuggestions]
       });
-    } else if ( keyCode === 38) {
+    } else if (keyCode === 38) {
       if (activeSuggestions === 0) return;
 
       this.setState({ activeSuggestions: activeSuggestions - 1 });
@@ -73,18 +73,12 @@ export default class AutoComplete extends Component {
       onChange,
       onClick,
       onKeyDown,
-      props: {
-        handleChange
-      },
-      state: {
-        activeSuggestions,
-        filteredSuggestions,
-        shownSuggestions,
-        userInput
-      },
+      props: { handleChange },
+      state: { filteredSuggestions, shownSuggestions, userInput }
     } = this;
 
-    const ulMinHeight = filteredSuggestions.length > 5 ? "h-48" : filteredSuggestions.length;
+    const ulMinHeight =
+      filteredSuggestions.length > 5 ? "h-48" : filteredSuggestions.length;
     let suggestionsListComponent;
 
     if (shownSuggestions && userInput) {
@@ -96,10 +90,6 @@ export default class AutoComplete extends Component {
             {filteredSuggestions.map((suggestion, index) => {
               let className =
                 "block py-2 px-4 text-gray-800 hover:bg-indigo-500";
-
-              // if (index === activeSuggestions) {
-              //   className += "suggestion-active";
-              // }
 
               return (
                 <li key={index} className={className} onClick={onClick}>

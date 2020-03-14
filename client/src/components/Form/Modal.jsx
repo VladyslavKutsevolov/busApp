@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class Modal extends Component {
-  // Keep your coding patterns consistent.
   constructor(props) {
     super(props);
 
@@ -10,9 +9,9 @@ class Modal extends Component {
       name: "",
       reason: "",
       comment: "",
-      route: "",
+      route: ""
     };
-  };
+  }
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -27,13 +26,11 @@ class Modal extends Component {
       comment: this.state.comment,
       route
     };
-    // Remove 'add' this is an invisble route and the 'add' is a user facing
-    // aspect that isn't necessary. Should be just /api/posts no more.
     axios
-      .post("/api/posts/add", newPost)
+      .post("/api/posts", newPost)
       .then(res => res)
       .catch(err => console.log(err));
-
+    this.setState({ ...this.state });
     closeModal();
   };
 
