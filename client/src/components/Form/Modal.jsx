@@ -2,11 +2,16 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class Modal extends Component {
-  state = {
-    name: "",
-    reason: "",
-    comment: "",
-    route: ""
+  // Keep your coding patterns consistent.
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "",
+      reason: "",
+      comment: "",
+      route: "",
+    };
   };
 
   onChange = e => {
@@ -14,15 +19,16 @@ class Modal extends Component {
   };
 
   onSubmit = e => {
-    e.preventDefault();
     const { route, closeModal } = this.props;
+    e.preventDefault();
     const newPost = {
       name: this.state.name,
       reason: this.state.reason,
       comment: this.state.comment,
       route
     };
-    console.log(newPost);
+    // Remove 'add' this is an invisble route and the 'add' is a user facing
+    // aspect that isn't necessary. Should be just /api/posts no more.
     axios
       .post("/api/posts/add", newPost)
       .then(res => res)
