@@ -9,30 +9,22 @@ class App extends Component {
     super();
     this.state = {
       route: "",
-      busData: [],
-      allPosts: []
+      allPosts: [],
+      allRoutes: []
     };
   }
 
   componentDidMount() {
     this.fetchRoutes();
+    this.fetchAllPosts();
   }
 
   fetchRoutes = () => {
     fetch("/api/routes")
       .then(rsp => rsp.json())
       .then(allRoutes => {
-        this.allRoutes = allRoutes;
-        this.fetchAllPosts();
-        this.getBusNumber();
+        this.setState({ ...this.state, allRoutes });
       });
-  };
-
-  getBusNumber = () => {
-    if (this.allRoutes) {
-      const busData = this.allRoutes;
-      this.setState({ ...this.state, busData });
-    }
   };
 
   fetchAllPosts = () => {
@@ -57,7 +49,7 @@ class App extends Component {
           <Form
             route={this.state.route}
             handleChange={this.handleChange}
-            allRoutes={this.state.busData}
+            allRoutes={this.state.allRoutes}
           />
           <AllPosts posts={this.state.allPosts} route={this.state.route} />
         </div>
