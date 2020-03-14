@@ -21,9 +21,9 @@ export default class AutoComplete extends Component {
     };
   }
 
-  onChange = e => {
+  onChange = ({target}) => {
     const { suggestions } = this.props;
-    const userInput = e.target.value;
+    const userInput = target.value;
     const filteredSuggestions = suggestions
       .map(i => userInput && i.route_short_name + "-" + i.route_long_name)
       .filter(
@@ -38,31 +38,31 @@ export default class AutoComplete extends Component {
     });
   };
 
-  onClick = e => {
+  onClick = ({target}) => {
     const { handleChange } = this.props;
-    handleChange(e.target.innerText);
+    handleChange(target.innerText);
     this.setState({
       activeSuggestions: 0,
       filteredSuggestions: [],
       shownSuggestions: false,
-      userInput: e.target.innerText
+      userInput: target.innerText
     });
   };
 
-  onKeyDown = e => {
+  onKeyDown = ({keyCode}) => {
     const { activeSuggestions, filteredSuggestions } = this.state;
 
-    if (e.keyCode === 13) {
+    if (keyCode === 13) {
       this.setState({
         activeSuggestions: 0,
         shownSuggestions: false,
         userInput: filteredSuggestions[activeSuggestions]
       });
-    } else if (e.keyCode === 38) {
+    } else if ( keyCode === 38) {
       if (activeSuggestions === 0) return;
 
       this.setState({ activeSuggestions: activeSuggestions - 1 });
-    } else if (e.keyCode === 40) {
+    } else if (keyCode === 40) {
       if (activeSuggestions - 1 === filteredSuggestions.length) return;
       this.setState({ activeSuggestions: activeSuggestions + 1 });
     }
@@ -73,16 +73,18 @@ export default class AutoComplete extends Component {
       onChange,
       onClick,
       onKeyDown,
+      props: {
+        handleChange
+      },
       state: {
         activeSuggestions,
         filteredSuggestions,
         shownSuggestions,
         userInput
-      }
+      },
     } = this;
-    const { handleChange } = this.props;
-    const ulMinHeight =
-      filteredSuggestions.length > 5 ? "h-48" : filteredSuggestions.length;
+
+    const ulMinHeight = filteredSuggestions.length > 5 ? "h-48" : filteredSuggestions.length;
     let suggestionsListComponent;
 
     if (shownSuggestions && userInput) {
