@@ -35,6 +35,7 @@ function StateProvider({ children }) {
   }, []);
   const myRef = useRef();
   myRef.current = allPosts;
+
   const [myPosts, dispatch] = useReducer(AppReducer, myRef);
 
   const deletePost = id => {
@@ -45,11 +46,22 @@ function StateProvider({ children }) {
       });
     });
   };
+
+  const addPost = post => {
+    axios.post("/api/posts", post).then(res => {
+      dispatch({
+        type: "ADD_POST",
+        payload: res.data
+      });
+    });
+  };
+
   return (
     <LocalStateProvider
       value={{
         route,
         deletePost,
+        addPost,
         routes,
         myPosts,
         setRoute,

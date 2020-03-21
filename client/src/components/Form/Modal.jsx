@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useData } from "../../context/localStorage";
 
 function Modal({ show, closeModal }) {
@@ -7,8 +6,7 @@ function Modal({ show, closeModal }) {
   const [reason, setReason] = useState("");
   const [comment, setComment] = useState("");
 
-  const { route, myPosts, setPosts } = useData();
-  console.log(myPosts);
+  const { route, addPost } = useData();
 
   const onSubmit = e => {
     e.preventDefault();
@@ -18,11 +16,8 @@ function Modal({ show, closeModal }) {
       comment: comment,
       route: route
     };
-    axios
-      .post("/api/posts", newPost)
-      .then(res => res)
-      .catch(err => console.log(err));
-    setPosts([...myPosts.current, { ...newPost }]);
+
+    addPost(newPost);
     closeModal();
   };
 

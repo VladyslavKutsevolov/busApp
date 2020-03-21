@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export default class AutoComplete extends Component {
   static propTypes = {
-    suggestions: PropTypes.instanceOf(Array, Object)
+    suggestions: PropTypes.instanceOf(Array)
   };
 
   static defaultProps = {
@@ -34,7 +34,7 @@ export default class AutoComplete extends Component {
       activeSuggestions: 0,
       filteredSuggestions,
       shownSuggestions: true,
-      userInput
+      userInput: userInput
     });
   };
 
@@ -73,7 +73,6 @@ export default class AutoComplete extends Component {
       onChange,
       onClick,
       onKeyDown,
-      props: { handleChange },
       state: { filteredSuggestions, shownSuggestions, userInput }
     } = this;
 
@@ -122,7 +121,6 @@ export default class AutoComplete extends Component {
             name="route"
             type="text"
             placeholder="Enter bus number or route"
-            onInput={handleChange}
             onChange={onChange}
             onKeyDown={onKeyDown}
             value={userInput}

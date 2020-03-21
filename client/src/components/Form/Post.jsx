@@ -2,9 +2,10 @@ import React from "react";
 import { useData } from "../../context/localStorage";
 
 export default function Post({ posts, route }) {
-  const { deletePost, setRefresh } = useData();
+  const { deletePost } = useData();
+
   return (
-    <div className="grid grid-cols-3 gap-2 mt-5">
+    <div className="grid grid-cols-2 gap-2 mt-5 sm:grid-cols-2 md:grid-cols-3">
       {posts.current.map(
         post =>
           post.route === route && (
@@ -22,7 +23,7 @@ export default function Post({ posts, route }) {
                   Edit
                 </button>
                 <button
-                  onClick={() => (deletePost(post._id), setRefresh(true))}
+                  onClick={() => deletePost(post._id)}
                   className="bg-transparent border border-gray-500 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-1 px-3 rounded-full"
                 >
                   Delete
