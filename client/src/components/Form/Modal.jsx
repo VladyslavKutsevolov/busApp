@@ -7,7 +7,8 @@ function Modal({ show, closeModal }) {
   const [reason, setReason] = useState("");
   const [comment, setComment] = useState("");
 
-  const { route, posts, setPosts } = useData();
+  const { route, myPosts, setPosts } = useData();
+  console.log(myPosts);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -21,8 +22,8 @@ function Modal({ show, closeModal }) {
       .post("/api/posts", newPost)
       .then(res => res)
       .catch(err => console.log(err));
+    setPosts([...myPosts.current, { ...newPost }]);
     closeModal();
-    setPosts([...posts, { ...newPost }]);
   };
 
   return (

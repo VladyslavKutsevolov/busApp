@@ -1,11 +1,13 @@
 import React, {
-  useMemo,
   useContext,
   createContext,
   useState,
   useEffect,
+  useReducer,
   useRef
 } from "react";
+import AppReducer from "./AppReducer";
+import axios from "axios";
 
 const LocalStorageContext = createContext();
 const LocalStateProvider = LocalStorageContext.Provider;
@@ -13,7 +15,7 @@ const LocalStateProvider = LocalStorageContext.Provider;
 function StateProvider({ children }) {
   const [route, setRoute] = useState("");
   const [routes, setRoutes] = useState([]);
-  const [posts, setPosts] = useState([]);
+  const [allPosts, setPosts] = useState([]);
   useEffect(() => {
     async function getAllRoutes() {
       console.log("fetching routes...");
@@ -22,9 +24,7 @@ function StateProvider({ children }) {
     }
     getAllRoutes();
   }, []);
-  // fix infinte loop in posts
-  const myRef = useRef();
-  myRef.current = posts;
+
   useEffect(() => {
     async function getAllPosts() {
       console.log("fetching posts...");
@@ -32,10 +32,30 @@ function StateProvider({ children }) {
       setPosts(data);
     }
     getAllPosts();
-  }, [myRef]);
+  }, []);
+  const myRef = useRef();
+  myRef.current = allPosts;
+  const [myPosts, dispatch] = useReducer(AppReducer, myRef);
 
+  const deletePost = id => {
+    axios.delete(`/api/posts/${id}`).then(res => {
+      dispatch({
+        type: "DELETE_ITEM",
+        payload: id
+      });
+    });
+  };
   return (
-    <LocalStateProvider value={{ route, routes, posts, setRoute, setPosts }}>
+    <LocalStateProvider
+      value={{
+        route,
+        deletePost,
+        routes,
+        myPosts,
+        setRoute,
+        setPosts
+      }}
+    >
       {children}
     </LocalStateProvider>
   );
