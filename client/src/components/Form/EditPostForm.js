@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useData } from "../../context/localStorage";
 
-function Modal({ show, closeModal }) {
+function EditPostForm({ show, closeModal, postData }) {
   const [name, setName] = useState("");
   const [reason, setReason] = useState("");
   const [comment, setComment] = useState("");
-
-  const { route, addPost } = useData();
+  const { route, updatePost } = useData();
+  const [update, setUpdate] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -17,10 +17,11 @@ function Modal({ show, closeModal }) {
       route: route
     };
 
-    addPost(newPost);
+    updatePost(postData._id, newPost);
+
     closeModal();
   };
-
+  console.log(update);
   return (
     <>
       <div
@@ -57,7 +58,7 @@ function Modal({ show, closeModal }) {
             </div>
 
             {/* <!--Body--> */}
-            <form onSubmit={onSubmit} method="POST" action="/api/post">
+            <form onSubmit={onSubmit} method="POST" action="/api/posts/edit">
               <div className="container rounded px-8 pt-6 pb-8">
                 <label className="block mb-3" htmlFor="name">
                   <span className="text-gray-700">Name:</span>
@@ -65,6 +66,7 @@ function Modal({ show, closeModal }) {
                     onChange={({ target }) => setName(target.value)}
                     id="name"
                     name="name"
+                    defaultValue={postData.name}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Your name"
                   />
@@ -74,6 +76,7 @@ function Modal({ show, closeModal }) {
                   <select
                     onChange={({ target }) => setReason(target.value)}
                     name="reason"
+                    defaultValue={postData.reason}
                     className="shadow  border form-select block w-full mt-1"
                   >
                     <option></option>
@@ -87,6 +90,7 @@ function Modal({ show, closeModal }) {
                     onChange={({ target }) => setComment(target.value)}
                     className="block shadow border rounded text-grey-darkest flex-1 p-2 m-1 w-full h-24"
                     name="comment"
+                    defaultValue={postData.comment}
                     id="comment"
                     cols="30"
                     rows="10"
@@ -99,6 +103,7 @@ function Modal({ show, closeModal }) {
               <div className="flex justify-end pt-2">
                 <button
                   type="submit"
+                  onClick={() => setUpdate(true)}
                   className="px-4 bg-transparent border p-3 rounded-lg cursor-pointer text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
                 >
                   Action
@@ -118,4 +123,4 @@ function Modal({ show, closeModal }) {
   );
 }
 
-export default Modal;
+export { EditPostForm };

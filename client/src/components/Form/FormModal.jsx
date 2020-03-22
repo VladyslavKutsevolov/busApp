@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 
-export default function FormModal({ route }) {
+export default function FormModal() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -16,7 +16,7 @@ export default function FormModal({ route }) {
           Add Comment
         </button>
       </div>
-      <Modal route={route} show={show} closeModal={handleClose} />
+      <Modal show={show} closeModal={handleClose} />
     </>
   );
 }

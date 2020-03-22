@@ -16,6 +16,10 @@ function StateProvider({ children }) {
   const [route, setRoute] = useState("");
   const [routes, setRoutes] = useState([]);
   const [allPosts, setPosts] = useState([]);
+  const myRef = useRef();
+  myRef.current = allPosts;
+  const [myPosts, dispatch] = useReducer(AppReducer, myRef);
+
   useEffect(() => {
     async function getAllRoutes() {
       console.log("fetching routes...");
@@ -33,10 +37,8 @@ function StateProvider({ children }) {
     }
     getAllPosts();
   }, []);
-  const myRef = useRef();
-  myRef.current = allPosts;
 
-  const [myPosts, dispatch] = useReducer(AppReducer, myRef);
+  console.log(myPosts);
 
   const deletePost = id => {
     axios.delete(`/api/posts/${id}`).then(res => {
@@ -56,11 +58,31 @@ function StateProvider({ children }) {
     });
   };
 
+  const getSinglePost = id => {
+    axios.get(`/api/posts/edit/${id}`).then(res => {
+      dispatch({
+        type: "EDIT_POST",
+        payload: res.data
+      });
+    });
+  };
+
+  const updatePost = (id, post) => {
+    axios.post(`/api/posts/edit/${id}`, post).then(res => {
+      dispatch({
+        type: "ADD_POST",
+        payload: res.data
+      });
+    });
+  };
+
   return (
     <LocalStateProvider
       value={{
         route,
         deletePost,
+        updatePost,
+        getSinglePost,
         addPost,
         routes,
         myPosts,

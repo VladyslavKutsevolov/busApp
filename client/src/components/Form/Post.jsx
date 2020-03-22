@@ -1,9 +1,9 @@
 import React from "react";
 import { useData } from "../../context/localStorage";
 
-export default function Post({ posts, route }) {
+export default function Post({ posts, getPostData, fetchPostData, route }) {
   const { deletePost } = useData();
-
+  getPostData(posts.data);
   return (
     <div className="grid grid-cols-2 gap-2 mt-5 sm:grid-cols-2 md:grid-cols-3">
       {posts.current.map(
@@ -19,7 +19,10 @@ export default function Post({ posts, route }) {
               <span>{post.date}</span>
               <p className="text-gray-700 text-base">{post.comment}</p>
               <div className="mx-auto flex justify-end">
-                <button className="bg-transparent border border-gray-500 mr-1 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-1 px-3 rounded-full">
+                <button
+                  onClick={() => fetchPostData(post._id)}
+                  className="bg-transparent border border-gray-500 mr-1 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-1 px-3 rounded-full"
+                >
                   Edit
                 </button>
                 <button

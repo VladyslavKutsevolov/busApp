@@ -10,6 +10,11 @@ export default function(posts, action) {
         ...posts,
         current: [...posts.current, action.payload]
       };
+    case "EDIT_POST":
+      return {
+        ...posts,
+        data: action.payload
+      };
     default:
       return posts;
   }
