@@ -43,7 +43,7 @@ function StateProvider({ children }) {
   const deletePost = id => {
     axios.delete(`/api/posts/${id}`).then(res => {
       dispatch({
-        type: "DELETE_ITEM",
+        type: "DELETE_POST",
         payload: id
       });
     });
@@ -61,7 +61,7 @@ function StateProvider({ children }) {
   const getSinglePost = id => {
     axios.get(`/api/posts/edit/${id}`).then(res => {
       dispatch({
-        type: "EDIT_POST",
+        type: "GET_SINGLE_POST",
         payload: res.data
       });
     });
@@ -70,10 +70,12 @@ function StateProvider({ children }) {
   const updatePost = (id, post) => {
     axios.post(`/api/posts/edit/${id}`, post).then(res => {
       dispatch({
-        type: "ADD_POST",
-        payload: res.data
+        type: "UPDATE_POST",
+        payload: res.data,
+        id: id
       });
     });
+    console.log("fired");
   };
 
   return (

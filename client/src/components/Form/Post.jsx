@@ -3,7 +3,7 @@ import { useData } from "../../context/localStorage";
 
 export default function Post({ posts, getPostData, fetchPostData, route }) {
   const { deletePost } = useData();
-  getPostData(posts.data);
+  getPostData(posts.post);
   return (
     <div className="grid grid-cols-2 gap-2 mt-5 sm:grid-cols-2 md:grid-cols-3">
       {posts.current.map(

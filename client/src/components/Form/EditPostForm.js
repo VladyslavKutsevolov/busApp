@@ -6,7 +6,6 @@ function EditPostForm({ show, closeModal, postData }) {
   const [reason, setReason] = useState("");
   const [comment, setComment] = useState("");
   const { route, updatePost } = useData();
-  const [update, setUpdate] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -18,10 +17,8 @@ function EditPostForm({ show, closeModal, postData }) {
     };
 
     updatePost(postData._id, newPost);
-
     closeModal();
   };
-  console.log(update);
   return (
     <>
       <div
@@ -103,7 +100,7 @@ function EditPostForm({ show, closeModal, postData }) {
               <div className="flex justify-end pt-2">
                 <button
                   type="submit"
-                  onClick={() => setUpdate(true)}
+                  onClick={e => onSubmit(e)}
                   className="px-4 bg-transparent border p-3 rounded-lg cursor-pointer text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
                 >
                   Action

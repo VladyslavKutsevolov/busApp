@@ -10,10 +10,18 @@ export default function(posts, action) {
         ...posts,
         current: [...posts.current, action.payload]
       };
-    case "EDIT_POST":
+    case "GET_SINGLE_POST":
       return {
         ...posts,
-        data: action.payload
+        post: action.payload
+      };
+    case "UPDATE_POST":
+      const up = posts.current.map(e =>
+        e._id === action.id ? action.payload : e
+      );
+      return {
+        ...posts,
+        current: up
       };
     default:
       return posts;
