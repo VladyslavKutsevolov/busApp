@@ -46,9 +46,12 @@ router.post("/edit/:id", (req, res) => {
     reason: req.body.reason,
     comment: req.body.comment
   };
+
   Post.findByIdAndUpdate(query, post, { useFindAndModify: false }, err => {
     if (err) console.log(err);
-  }).then(data => res.json(data));
+  })
+    .then(data => res.json(data))
+    .catch(err => console.log(err));
 });
 
 module.exports = router;

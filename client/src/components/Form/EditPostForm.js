@@ -10,12 +10,11 @@ function EditPostForm({ show, closeModal, postData }) {
   const onSubmit = e => {
     e.preventDefault();
     const newPost = {
-      name: postData.name || name,
-      reason: postData.reason || reason,
-      comment: postData.comment || comment,
+      name: name || postData.name,
+      reason: reason || postData.reason,
+      comment: comment || postData.comment,
       route: route
     };
-
     updatePost(postData._id, newPost);
     closeModal();
   };

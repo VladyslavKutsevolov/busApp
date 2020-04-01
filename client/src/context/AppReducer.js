@@ -16,12 +16,12 @@ export default function(posts, action) {
         post: action.payload
       };
     case "UPDATE_POST":
-      const up = posts.current.map(e =>
+      const update = posts.current.map(e =>
         e._id === action.id ? action.payload : e
       );
       return {
         ...posts,
-        current: up
+        current: update
       };
     default:
       return posts;

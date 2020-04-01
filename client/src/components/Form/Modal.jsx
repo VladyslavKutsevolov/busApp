@@ -8,6 +8,12 @@ function Modal({ show, closeModal }) {
 
   const { route, addPost } = useData();
 
+  const clearFields = () => {
+    setName("");
+    setComment("");
+    setReason("");
+  };
+
   const onSubmit = e => {
     e.preventDefault();
     const newPost = {
@@ -19,9 +25,7 @@ function Modal({ show, closeModal }) {
 
     addPost(newPost);
     closeModal();
-    setName("");
-    setComment("");
-    setReason("");
+    clearFields();
   };
 
   return (
