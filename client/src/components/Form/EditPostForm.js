@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useData } from "../../context/localStorage";
 
-function EditPostForm({ show, closeModal, postData }) {
+function EditPostForm({ show, closeModal, postData, clearFields }) {
   const [name, setName] = useState("");
   const [reason, setReason] = useState("");
   const [comment, setComment] = useState("");
@@ -17,6 +17,7 @@ function EditPostForm({ show, closeModal, postData }) {
     };
     updatePost(postData._id, newPost);
     closeModal();
+    clearFields();
   };
   return (
     <>
@@ -119,4 +120,4 @@ function EditPostForm({ show, closeModal, postData }) {
   );
 }
 
-export { EditPostForm };
+export default EditPostForm;

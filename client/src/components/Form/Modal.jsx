@@ -1,33 +1,17 @@
-import React, { useState } from "react";
-import { useData } from "../../context/localStorage";
+import React from "react";
 
-function Modal({ show, closeModal }) {
-  const [name, setName] = useState("");
-  const [reason, setReason] = useState("");
-  const [comment, setComment] = useState("");
-
-  const { route, addPost } = useData();
-
-  const clearFields = () => {
-    setName("");
-    setComment("");
-    setReason("");
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-    const newPost = {
-      name: name,
-      reason: reason,
-      comment: comment,
-      route: route
-    };
-
-    addPost(newPost);
-    closeModal();
-    clearFields();
-  };
-
+function Modal({
+  name,
+  reason,
+  comment,
+  show,
+  closeModal,
+  route,
+  onSubmit,
+  setName,
+  setReason,
+  setComment
+}) {
   return (
     <>
       <div
@@ -71,6 +55,7 @@ function Modal({ show, closeModal }) {
                   <input
                     onChange={({ target }) => setName(target.value)}
                     id="name"
+                    value={name}
                     name="name"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Your name"
@@ -81,6 +66,7 @@ function Modal({ show, closeModal }) {
                   <select
                     onChange={({ target }) => setReason(target.value)}
                     name="reason"
+                    value={reason}
                     className="shadow  border form-select block w-full mt-1"
                   >
                     <option></option>
@@ -94,6 +80,7 @@ function Modal({ show, closeModal }) {
                     onChange={({ target }) => setComment(target.value)}
                     className="block shadow border rounded text-grey-darkest flex-1 p-2 m-1 w-full h-24"
                     name="comment"
+                    value={comment}
                     id="comment"
                     cols="30"
                     rows="10"

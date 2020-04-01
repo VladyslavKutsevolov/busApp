@@ -6,8 +6,10 @@ import FormModal from "./Form/FormModal";
 import AutoComplete from "./Form/AutoComplete";
 
 export default function Page() {
-  const { route, routes, myPosts, setRoute } = useData();
+  const { route, routes, myPosts, setRoute, getSinglePost } = useData();
   const [show, setShow] = useState(false);
+  const [postData, getPostData] = useState();
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -19,10 +21,14 @@ export default function Page() {
         <AutoComplete handleChange={setRoute} suggestions={routes} />
         <FormModal
           show={show}
+          postData={postData}
           handleClose={handleClose}
           handleShow={handleShow}
         />
         <AllPosts
+          postData={postData}
+          getSinglePost={getSinglePost}
+          getPostData={getPostData}
           posts={myPosts}
           route={route}
           show={show}
