@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { useData } from "../../context/localStorage";
-import EditPostForm from "./EditPostForm";
+import EditPostFormModal from "./EditPostFormModal";
 
 export default function FormModal({ show, handleClose, handleShow, postData }) {
   const [name, setName] = useState("");
@@ -56,7 +56,7 @@ export default function FormModal({ show, handleClose, handleShow, postData }) {
         setComment={setComment}
       />
       {show && postData && (
-        <EditPostForm
+        <EditPostFormModal
           postData={postData}
           clearFields={clearFields}
           closeModal={handleClose}
