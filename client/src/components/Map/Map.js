@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useState } from "react";
+import ReactMapGL from "react-map-gl";
+import PolylineOverlay from "./PolylineOverlay";
 
-const Map = () => (
-  <div id="map" className="flex flex-col p-6">
-    <h2>Map will go here</h2>
-    <p>load map to show location aka long and lat that goes along with your feedback.</p>
-  </div>
-)
+const TOKEN =
+  "pk.eyJ1Ijoia3l0c2V2b2xvdiIsImEiOiJjazhkcXRtOWQweDZvM2RvMWdkMDJyZHRtIn0.05dnAAjwmEhxNEMmCR0mYQ";
 
-export default Map
+function Map({ allRoutes, route }) {
+  const [viewport, setViewport] = useState({
+    width: "100%",
+    height: 400,
+    latitude: 51.05011,
+    longitude: -114.08529,
+    zoom: 9
+  });
+
+  return (
+    <div>
+      <ReactMapGL
+        mapboxApiAccessToken={TOKEN}
+        {...viewport}
+        onViewportChange={setViewport}
+      >
+        {route && <PolylineOverlay allRoutes={allRoutes} route={route} />}
+      </ReactMapGL>
+    </div>
+  );
+}
+
+export default Map;
