@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import ReactMapGL from "react-map-gl";
 import PolylineOverlay from "./PolylineOverlay";
 
-const TOKEN =
-  "pk.eyJ1Ijoia3l0c2V2b2xvdiIsImEiOiJjazhkcXRtOWQweDZvM2RvMWdkMDJyZHRtIn0.05dnAAjwmEhxNEMmCR0mYQ";
-
 function Map({ allRoutes, route }) {
   const [viewport, setViewport] = useState({
     width: "100%",
@@ -17,7 +14,7 @@ function Map({ allRoutes, route }) {
   return (
     <div>
       <ReactMapGL
-        mapboxApiAccessToken={TOKEN}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
         {...viewport}
         onViewportChange={setViewport}
       >
