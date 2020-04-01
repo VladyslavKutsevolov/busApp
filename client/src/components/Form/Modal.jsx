@@ -19,6 +19,9 @@ function Modal({ show, closeModal }) {
 
     addPost(newPost);
     closeModal();
+    setName("");
+    setComment("");
+    setReason("");
   };
 
   return (
@@ -70,7 +73,7 @@ function Modal({ show, closeModal }) {
                   />
                 </label>
                 <label className="block mb-3">
-                  <span className="text-gray-700">Select</span>
+                  <span className="text-gray-700">Select Reason</span>
                   <select
                     onChange={({ target }) => setReason(target.value)}
                     name="reason"

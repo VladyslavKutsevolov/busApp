@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "./Modal";
 
-export default function FormModal() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+export default function FormModal({ show, handleClose, handleShow }) {
   return (
     <>
       <div>

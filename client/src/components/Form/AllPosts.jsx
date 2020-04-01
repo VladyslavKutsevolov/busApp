@@ -3,13 +3,15 @@ import Post from "./Post";
 import { EditPostForm } from "./EditPostForm";
 import { useData } from "../../context/localStorage";
 
-export default function AllPosts({ posts, route }) {
-  const [show, setShow] = useState(false);
+export default function AllPosts({
+  posts,
+  route,
+  show,
+  handleClose,
+  handleShow
+}) {
   const [postData, getPostData] = useState();
   const { getSinglePost } = useData();
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const fetchPostData = id => {
     getSinglePost(id);

@@ -11,7 +11,7 @@ export default class PolylineOverlay extends PureComponent {
       route
     } = this.props;
     ctx.clearRect(0, 0, width, height);
-    ctx.globalCompositeOperation = "lighter";
+    ctx.globalCompositeOperation = "source-over";
     const coordPoints = [];
     const getSingleRouteCoordiantes = () => {
       let findPonts = allRoutes
@@ -24,7 +24,7 @@ export default class PolylineOverlay extends PureComponent {
       coordPoints.push(findPonts);
     };
 
-    if (renderWhileDragging || !isDragging) {
+    if (renderWhileDragging || (!isDragging && coordPoints)) {
       ctx.lineWidth = lineWidth;
       ctx.strokeStyle = color;
       ctx.beginPath();
