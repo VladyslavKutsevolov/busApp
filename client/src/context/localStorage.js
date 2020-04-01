@@ -38,8 +38,6 @@ function StateProvider({ children }) {
     getAllPosts();
   }, []);
 
-  console.log(myPosts);
-
   const deletePost = id => {
     axios.delete(`/api/posts/${id}`).then(res => {
       dispatch({
@@ -75,7 +73,6 @@ function StateProvider({ children }) {
         id: id
       });
     });
-    console.log("fired");
   };
 
   return (

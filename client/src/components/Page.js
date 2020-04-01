@@ -14,8 +14,8 @@ export default function Page() {
         <Form route={route} handleChange={setRoute} allRoutes={routes} />
         <AllPosts posts={myPosts} route={route} />
       </div>
-      <div>
-        <Map />
+      <div className="app p-6">
+        <Map allRoutes={routes} route={route} />
       </div>
     </div>
   );
