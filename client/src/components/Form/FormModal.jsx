@@ -20,7 +20,6 @@ export default function FormModal({ show, handleClose, handleShow, postData }) {
     handleShow();
     console.log("fired!");
   };
-
   const onSubmit = e => {
     e.preventDefault();
     const newPost = {
@@ -29,7 +28,6 @@ export default function FormModal({ show, handleClose, handleShow, postData }) {
       comment: comment,
       route: route
     };
-
     addPost(newPost);
     handleClose();
     clearFields();
@@ -39,7 +37,7 @@ export default function FormModal({ show, handleClose, handleShow, postData }) {
       <div>
         <button
           onClick={showAndUpdateInputFields}
-          className="bg-transparent border border-gray-500 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-2 px-4 rounded-full"
+          className="bg-transparent border border-indigo-500 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-2 px-4 rounded-full"
         >
           Add Comment
         </button>

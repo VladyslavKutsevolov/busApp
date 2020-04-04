@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { check, validationResult } = require("express-validator");
 
 // Post model
 const Post = require("../../model/posts");
@@ -12,19 +13,31 @@ router.get("/", (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.post("/", (req, res) => {
-  const newPost = new Post({
-    name: req.body.name,
-    reason: req.body.reason,
-    comment: req.body.comment,
-    route: req.body.route
-  });
+router.post(
+  "/",
+  [
+    check("name", "Name is required!").notEmpty(),
+    check("reason", "Reason is required!").notEmpty()
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json({ errors: errors.array() });
+    } else {
+      const newPost = new Post({
+        name: req.body.name,
+        reason: req.body.reason,
+        comment: req.body.comment,
+        route: req.body.route
+      });
 
-  newPost
-    .save()
-    .then(post => res.json(post))
-    .catch(err => console.log(err));
-});
+      newPost
+        .save()
+        .then(post => res.json(post))
+        .catch(err => console.log(err));
+    }
+  }
+);
 
 router.delete("/:id", (req, res) => {
   Post.findById(req.params.id)

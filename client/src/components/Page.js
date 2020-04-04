@@ -4,9 +4,18 @@ import { useData } from "../context/localStorage";
 import AllPosts from "./Form/AllPosts";
 import FormModal from "./Form/FormModal";
 import AutoComplete from "./Form/AutoComplete";
+import ErrorMsg from "./Form/ErrorMsg";
 
 export default function Page() {
-  const { route, routes, myPosts, setRoute, getSinglePost } = useData();
+  const {
+    route,
+    routes,
+    myPosts,
+    setRoute,
+    getSinglePost,
+    errors,
+    setErrors
+  } = useData();
   const [show, setShow] = useState(false);
   const [postData, getPostData] = useState();
 
@@ -14,13 +23,16 @@ export default function Page() {
   const handleShow = () => setShow(true);
 
   return (
-    <div>
+    <div className="bg-white-300">
       <div className="app p-6 z-10">
+        <ErrorMsg isErrors={errors} setErrors={setErrors} />
         <h1 className="text-3xl pb-4 text-center">BusApp</h1>
         <h2>Feedback about whom?</h2>
         <AutoComplete handleChange={setRoute} suggestions={routes} />
         <FormModal
           show={show}
+          isErrors={errors}
+          setErrors={setErrors}
           postData={postData}
           handleClose={handleClose}
           handleShow={handleShow}

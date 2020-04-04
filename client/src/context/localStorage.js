@@ -16,6 +16,7 @@ function StateProvider({ children }) {
   const [route, setRoute] = useState("");
   const [routes, setRoutes] = useState([]);
   const [allPosts, setPosts] = useState([]);
+  const [errors, setErrors] = useState(null);
   const myRef = useRef();
   myRef.current = allPosts;
   const [myPosts, dispatch] = useReducer(AppReducer, myRef);
@@ -49,13 +50,16 @@ function StateProvider({ children }) {
 
   const addPost = post => {
     axios.post("/api/posts", post).then(res => {
+      if (res.data.errors) {
+        setErrors(res.data.errors);
+        return;
+      }
       dispatch({
         type: "ADD_POST",
         payload: res.data
       });
     });
   };
-
   const getSinglePost = id => {
     axios.get(`/api/posts/edit/${id}`).then(res => {
       dispatch({
@@ -74,6 +78,7 @@ function StateProvider({ children }) {
       });
     });
   };
+  console.log(myPosts);
 
   return (
     <LocalStateProvider
@@ -86,7 +91,9 @@ function StateProvider({ children }) {
         routes,
         myPosts,
         setRoute,
-        setPosts
+        setPosts,
+        errors,
+        setErrors
       }}
     >
       {children}

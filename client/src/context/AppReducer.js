@@ -8,7 +8,8 @@ export default function(posts, action) {
     case "ADD_POST":
       return {
         ...posts,
-        current: [...posts.current, action.payload]
+        current: [...posts.current, action.payload],
+        errors: action.errors
       };
     case "GET_SINGLE_POST":
       return {

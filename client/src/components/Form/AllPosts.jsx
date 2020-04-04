@@ -4,10 +4,7 @@ import Post from "./Post";
 export default function AllPosts({
   posts,
   route,
-  show,
-  handleClose,
   handleShow,
-  postData,
   getPostData,
   getSinglePost
 }) {
