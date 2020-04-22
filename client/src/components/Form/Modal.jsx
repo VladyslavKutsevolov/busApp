@@ -11,17 +11,15 @@ function Modal({
   onSubmit,
   setName,
   setReason,
-  setComment,
-  isErrors,
-  setErrors
+  setComment
 }) {
-  const validateFields = () => {
-    if (isErrors) {
-      setTimeout(() => {
-        return <ErrorMsg isErrors={isErrors} setErrors={setErrors} />;
-      }, 3000);
-    }
-  };
+  // const validateFields = () => {
+  //   if (isErrors) {
+  //     setTimeout(() => {
+  //       return <ErrorMsg isErrors={isErrors} setErrors={setErrors} />;
+  //     }, 3000);
+  //   }
+  // };
   return (
     <>
       <div
@@ -103,7 +101,6 @@ function Modal({
               <div className="flex justify-end pt-2">
                 <button
                   type="submit"
-                  onClick={validateFields}
                   className="px-4 bg-transparent border p-3 rounded-lg cursor-pointer text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
                 >
                   Action

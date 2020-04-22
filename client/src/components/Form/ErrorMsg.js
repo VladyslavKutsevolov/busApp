@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function ErrorMsg({ isErrors }) {
+export default function ErrorMsg({ error }) {
   return (
     <div>
-      {isErrors &&
-        isErrors.map(err => {
+      {error &&
+        error.map((err) => {
           if (err.value === "") {
             return (
               <ul

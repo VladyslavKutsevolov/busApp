@@ -1,9 +1,10 @@
 const express = require("express");
+
 const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
-
 const bodyParser = require("body-parser");
+const expressMessages = require("express-messages");
 
 // parse application/x-www-form-urlencoded
 app.use(
@@ -15,14 +16,15 @@ app.use(
 app.use(bodyParser.json());
 
 // connect mongoDb
+
 const db = require("../client/config/database").database;
+
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("MongoDb connected...");
   })
-  .catch(err => console.log(err));
-
+  .catch((error) => console.log(error));
 // Express session middleware
 app.use(
   session({
@@ -33,13 +35,15 @@ app.use(
 );
 // connect-flush middleware
 app.use(require("connect-flash")());
-app.use(function(req, res, next) {
-  res.locals.messages = require("express-messages")(req, res);
+
+app.use((req, res, next) => {
+  res.locals.messages = expressMessages(req, res);
   next();
 });
 // Route files
 const routes = require("./routes/api/routes");
 const posts = require("./routes/api/posts");
+
 app.use("/api/posts", posts);
 app.use("/api/routes", routes);
 
