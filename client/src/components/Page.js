@@ -26,7 +26,7 @@ export default function Page() {
 
   useEffect(() => {
     dispatch(fetchAllRoutes);
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="bg-white-300">

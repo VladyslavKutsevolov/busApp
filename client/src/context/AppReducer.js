@@ -16,7 +16,8 @@ export default function (state, action) {
       data: {
         allPosts: state.data.allPosts.filter(
           (post) => post._id !== action.payload
-        )
+        ),
+        allRoutes: [...state.data.allRoutes]
       }
     };
   }
@@ -24,7 +25,8 @@ export default function (state, action) {
   if (action.type === ADD_POST) {
     return {
       data: {
-        allPosts: [action.payload, ...state.data.allPosts]
+        allPosts: [action.payload, ...state.data.allPosts],
+        allRoutes: [...state.data.allRoutes]
       },
       loading: false,
       error: null
@@ -45,7 +47,8 @@ export default function (state, action) {
     return {
       ...state,
       data: {
-        allPosts: update
+        allPosts: update,
+        allRoutes: [...state.data.allRoutes]
       }
     };
   }
