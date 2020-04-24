@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import Post from "./Post";
-import { LOADING, ERROR, FETCH_POSTS } from "../../context/types";
-import { useData } from "../../context/localStorage";
+import React, { useEffect } from 'react';
+import Post from './Post';
+import { LOADING, ERROR, FETCH_POSTS } from '../../context/types';
+import { useData } from '../../context/localStorage';
 
 export default function AllPosts({
   route,
   handleShow,
   getPostData,
-  getSinglePost
+  getSinglePost,
 }) {
   const { state, dispatch } = useData();
   const { loading, data } = state;
@@ -16,11 +16,11 @@ export default function AllPosts({
   const fetchAllPosts = async (dispatch) => {
     dispatch({ type: LOADING });
     try {
-      const response = await fetch("/api/posts");
+      const response = await fetch('/api/posts');
       const data = await response.json();
       dispatch({
         type: FETCH_POSTS,
-        payload: { allPosts: data, allRoutes: state.data.allRoutes }
+        payload: { allPosts: data, allRoutes: state.data.allRoutes },
       });
     } catch (error) {
       dispatch({ type: ERROR, payload: { error } });

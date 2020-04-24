@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
@@ -9,8 +10,8 @@ const Post = require("../../model/posts");
 router.get("/", (req, res) => {
   Post.find()
     .sort({ date: -1 })
-    .then(posts => res.json(posts))
-    .catch(err => console.log(err));
+    .then((posts) => res.json(posts))
+    .catch((err) => console.log(err));
 });
 
 router.post(
@@ -33,22 +34,22 @@ router.post(
 
       newPost
         .save()
-        .then(post => res.json(post))
-        .catch(err => console.log(err));
+        .then((post) => res.json(post))
+        .catch((err) => console.log(err));
     }
   }
 );
 
 router.delete("/:id", (req, res) => {
   Post.findById(req.params.id)
-    .then(post => post.remove().then(() => res.json({ success: true })))
+    .then((post) => post.remove().then(() => res.json({ success: true })))
     .catch(() => res.json({ success: false }));
 });
 
 // Edit Post
 router.get("/edit/:id", (req, res) => {
   Post.findById(req.params.id)
-    .then(post => res.json(post))
+    .then((post) => res.json(post))
     .catch(() => res.json({ success: false }));
 });
 
@@ -60,11 +61,11 @@ router.post("/edit/:id", (req, res) => {
     comment: req.body.comment
   };
 
-  Post.findByIdAndUpdate(query, post, { useFindAndModify: false }, err => {
+  Post.findByIdAndUpdate(query, post, { useFindAndModify: false }, (err) => {
     if (err) console.log(err);
   })
-    .then(data => res.json(data))
-    .catch(err => console.log(err));
+    .then((data) => res.json(data))
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;

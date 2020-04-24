@@ -1,5 +1,4 @@
 import React from "react";
-import ErrorMsg from "./ErrorMsg";
 
 function Modal({
   name,
@@ -13,13 +12,6 @@ function Modal({
   setReason,
   setComment
 }) {
-  // const validateFields = () => {
-  //   if (isErrors) {
-  //     setTimeout(() => {
-  //       return <ErrorMsg isErrors={isErrors} setErrors={setErrors} />;
-  //     }, 3000);
-  //   }
-  // };
   return (
     <>
       <div

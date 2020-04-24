@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import RouteMap from "./Map/Map.js";
-import { useData } from "../context/localStorage";
-import AllPosts from "./Form/AllPosts";
-import FormModal from "./Form/FormModal";
-import AutoComplete from "./Form/AutoComplete";
-import ErrorMsg from "./Form/ErrorMsg";
+import React, { useState, useEffect } from 'react';
+import RouteMap from './Map/Map.js';
+import { useData } from '../context/localStorage';
+import AllPosts from './Form/AllPosts';
+import FormModal from './Form/FormModal';
+import AutoComplete from './Form/AutoComplete';
 
 export default function Page() {
   const {
@@ -13,26 +12,23 @@ export default function Page() {
     getSinglePost,
     state,
     dispatch,
-    fetchAllRoutes
+    fetchAllRoutes,
   } = useData();
   const [show, setShow] = useState(false);
   const [postData, getPostData] = useState();
   const { loading, error, data } = state;
   const { allRoutes } = data;
-  console.log(state);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
     dispatch(fetchAllRoutes);
-  }, [dispatch]);
+  }, [fetchAllRoutes, dispatch]);
 
   return (
-    <div className="bg-white-300">
-      <div className="app p-6 z-10">
-        <ErrorMsg isErrors={error} />
-        <h1 className="text-3xl pb-4 text-center">BusApp</h1>
+    <div className="constainer ">
+      <div className="app p-4">
         <h2>Feedback about whom?</h2>
         {loading ? (
           <p>Loading...</p>
@@ -66,7 +62,7 @@ export default function Page() {
           />
         )}
       </div>
-      <div className="app p-6">
+      <div className="app p-4">
         {!show && allRoutes && <RouteMap allRoutes={allRoutes} route={route} />}
       </div>
     </div>

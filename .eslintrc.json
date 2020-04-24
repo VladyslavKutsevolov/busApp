@@ -29,20 +29,43 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": false }],
-    "no-unused-vars": "warn",
-    "no-console": "off",
-    "func-names": "off",
-    "no-process-exit": "off",
-    "object-shorthand": "off",
-    "class-methods-use-this": "off",
-    "no-unreachable": 1,
-    "arrow-parens": "off",
-    "avoidEscape": 0,
-    "allowTemplateLiterals": 0,
-    "quotes": "off",
-    "comma-dangle": 0,
-    "function-paren-newline": 0,
-    "implicit-arrow-linebreak": 0
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "all"
+      }
+    ],
+    "no-console": 0,
+    "consistent-return": 0,
+    "no-underscore-dangle": 0,
+    "no-await-in-loop": 0,
+    "no-restricted-syntax": 0,
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "next"
+      }
+    ],
+    "no-use-before-define": [
+      "error",
+      {
+        "variables": false
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "no-multi-str": 0,
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-throw-literal": "error"
   }
 }

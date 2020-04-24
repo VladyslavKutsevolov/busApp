@@ -1,5 +1,5 @@
-import React, { useReducer, useCallback } from "react";
-import isFunction from "lodash/isFunction";
+import { useReducer, useCallback } from 'react';
+import isFunction from 'lodash/isFunction';
 
 const useThunkReducer = (reducer, initialState) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -9,7 +9,7 @@ const useThunkReducer = (reducer, initialState) => {
       console.log(action);
       isFunction(action) ? action(dispatch) : dispatch(action);
     },
-    [dispatch]
+    [dispatch],
   );
 
   return [state, enhancedReducer];

@@ -1,0 +1,5 @@
+{
+    "PORT": 5000,
+    "jwtSecret": "mySectet",
+    "mongoURI": "mongodb+srv://Vladyslav:busapp123@cluster0-ihmrz.mongodb.net/busApp?retryWrites=true&w=majority"
+}

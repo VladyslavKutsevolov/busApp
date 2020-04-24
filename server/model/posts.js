@@ -23,4 +23,5 @@ const newPost = mongoose.Schema({
   }
 });
 
-let Post = (module.exports = mongoose.model("Post", newPost));
+// eslint-disable-next-line no-multi-assign
+const Post = (module.exports = mongoose.model("Post", newPost));
