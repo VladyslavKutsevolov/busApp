@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Post from './Post';
-import { LOADING, ERROR, FETCH_POSTS } from '../../context/types';
-import { useData } from '../../context/localStorage';
+import { FETCH_POSTS } from '../../context/types';
+import { useData } from '../../context/localStateProvider';
+import { useHttp } from '../../hooks/http.hook';
+import Pagination from './Pagination';
 
 export default function AllPosts({
   route,
@@ -9,23 +11,17 @@ export default function AllPosts({
   getPostData,
   getSinglePost,
 }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage] = useState(3);
+  const { request, loading } = useHttp();
   const { state, dispatch } = useData();
-  const { loading, data } = state;
-  const { allPosts } = data;
+  const { allPosts } = state;
 
-  const fetchAllPosts = async (dispatch) => {
-    dispatch({ type: LOADING });
-    try {
-      const response = await fetch('/api/posts');
-      const data = await response.json();
-      dispatch({
-        type: FETCH_POSTS,
-        payload: { allPosts: data, allRoutes: state.data.allRoutes },
-      });
-    } catch (error) {
-      dispatch({ type: ERROR, payload: { error } });
-    }
-  };
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = allPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNum) => setCurrentPage(pageNum);
 
   const fetchPostData = (id) => {
     getSinglePost(id);
@@ -33,23 +29,31 @@ export default function AllPosts({
   };
 
   useEffect(() => {
-    dispatch(fetchAllPosts);
-  }, []);
+    const fetchAllPosts = async () => {
+      const data = await request('/api/posts');
+      dispatch({ type: FETCH_POSTS, payload: data });
+    };
+    fetchAllPosts();
+  }, [request, dispatch]);
 
-  console.log(state);
   return (
     <div>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <Post
-          posts={allPosts}
+          posts={currentPosts}
           getPostData={getPostData}
           fetchPostData={fetchPostData}
           route={route}
           showEditForm={handleShow}
         />
       )}
+      <Pagination
+        totalPosts={allPosts.length}
+        postPerPage={postPerPage}
+        paginate={paginate}
+      />
     </div>
   );
 }

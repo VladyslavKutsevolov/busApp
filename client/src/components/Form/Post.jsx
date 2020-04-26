@@ -1,5 +1,5 @@
-import React from "react";
-import { useData } from "../../context/localStorage";
+import React from 'react';
+import { useData } from '../../context/localStateProvider';
 
 export default function Post({ posts, getPostData, fetchPostData, route }) {
   const { deletePost, state } = useData();
@@ -14,7 +14,7 @@ export default function Post({ posts, getPostData, fetchPostData, route }) {
               <div
                 key={post._id}
                 className={`bg-${
-                  post.reason === "Gratitude" ? "green" : "red"
+                  post.reason === 'Gratitude' ? 'green' : 'red'
                 }-100 px-6 py-4 rounded overflow-hidden shadow-lg`}
               >
                 <div className="font-bold text-xl mb-2">{post.name}</div>
@@ -35,7 +35,7 @@ export default function Post({ posts, getPostData, fetchPostData, route }) {
                   </button>
                 </div>
               </div>
-            )
+            ),
         )}
     </div>
   );
