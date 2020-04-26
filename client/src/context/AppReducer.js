@@ -3,84 +3,45 @@ import {
   ADD_POST,
   UPDATE_POST,
   GET_SINGLE_POST,
-  LOADING,
-  ERROR,
   FETCH_POSTS,
-  FETCH_ROUTES
-} from "./types";
+} from './types';
 
 export default function (state, action) {
   if (action.type === DELETE_POST) {
     return {
       ...state,
-      data: {
-        allPosts: state.data.allPosts.filter(
-          (post) => post._id !== action.payload
-        ),
-        allRoutes: [...state.data.allRoutes]
-      }
+      allPosts: state.allPosts.filter((post) => post._id !== action.payload),
     };
   }
 
   if (action.type === ADD_POST) {
     return {
-      data: {
-        allPosts: [action.payload, ...state.data.allPosts],
-        allRoutes: [...state.data.allRoutes]
-      },
-      loading: false,
-      error: null
+      allPosts: [action.payload, ...state.allPosts],
     };
   }
 
   if (action.type === GET_SINGLE_POST) {
     return {
       ...state,
-      post: action.payload
+      post: action.payload,
     };
   }
 
   if (action.type === UPDATE_POST) {
-    const update = state.data.allPosts.map((e) =>
-      e._id === action.id ? action.payload : e
+    const updated = state.allPosts.map((e) =>
+      e._id === action.id ? action.payload : e,
     );
     return {
       ...state,
-      data: {
-        allPosts: update,
-        allRoutes: [...state.data.allRoutes]
-      }
-    };
-  }
-  if (action.type === FETCH_ROUTES) {
-    return {
-      data: action.payload,
-      loading: false,
-      error: null
+      allPosts: updated,
     };
   }
 
   if (action.type === FETCH_POSTS) {
     return {
-      data: action.payload,
+      allPosts: action.payload,
       loading: false,
-      error: null
-    };
-  }
-
-  if (action.type === LOADING) {
-    return {
-      data: [],
-      loading: true,
-      error: null
-    };
-  }
-
-  if (action.type === ERROR) {
-    return {
-      data: [],
-      loading: false,
-      error: action.payload.error
+      error: null,
     };
   }
 }

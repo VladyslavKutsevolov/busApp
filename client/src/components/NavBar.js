@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { useHistory, NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function NavBar() {
   const history = useHistory();

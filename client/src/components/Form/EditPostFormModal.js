@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { useData } from "../../context/localStorage";
+import React, { useState } from 'react';
+import { useData } from '../../context/localStateProvider';
 
 function EditPostFormModal({ show, closeModal, postData }) {
-  const [name, setName] = useState("");
-  const [reason, setReason] = useState("");
-  const [comment, setComment] = useState("");
+  const [name, setName] = useState('');
+  const [reason, setReason] = useState('');
+  const [comment, setComment] = useState('');
   const { route, updatePost } = useData();
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const newPost = {
       name: name || postData.name,
       reason: reason || postData.reason,
       comment: comment || postData.comment,
-      route: route
+      route: route,
     };
     updatePost(postData._id, newPost);
     closeModal();
@@ -22,7 +22,7 @@ function EditPostFormModal({ show, closeModal, postData }) {
     <>
       <div
         className={`modal opacity-${show ? 1 : 0} pointer-events-${
-          show ? "auto" : "none"
+          show ? 'auto' : 'none'
         } fixed w-full h-full top-0 left-0 flex items-center justify-center`}
       >
         <div
@@ -99,7 +99,7 @@ function EditPostFormModal({ show, closeModal, postData }) {
               <div className="flex justify-end pt-2">
                 <button
                   type="submit"
-                  onClick={e => onSubmit(e)}
+                  onClick={(e) => onSubmit(e)}
                   className="px-4 bg-transparent border p-3 rounded-lg cursor-pointer text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
                 >
                   Action

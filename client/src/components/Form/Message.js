@@ -12,8 +12,8 @@ export default function Message({ message, error }) {
           } px-4 py-3 rounded my-3`}
           role="alert"
         >
-          <p className="font-bold">{error ? 'Error!' : 'Info:'}</p>
-          <p className="text-sm">{error ? error : message}</p>
+          <span className="font-bold">{error ? 'Error!' : 'Info:'}</span>{' '}
+          <span className="text-sm">{error ? error : message}</span>
         </div>
       )}
     </div>

@@ -1,34 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import RouteMap from './Map/Map.js';
-import { useData } from '../context/localStorage';
+import { useData } from '../context/localStateProvider';
 import AllPosts from './Form/AllPosts';
 import FormModal from './Form/FormModal';
 import AutoComplete from './Form/AutoComplete';
+import { useHttp } from '../hooks/http.hook';
+import Message from './Form/Message';
 
 export default function Page() {
-  const {
-    route,
-    setRoute,
-    getSinglePost,
-    state,
-    dispatch,
-    fetchAllRoutes,
-  } = useData();
   const [show, setShow] = useState(false);
   const [postData, getPostData] = useState();
-  const { loading, error, data } = state;
-  const { allRoutes } = data;
+  const [allRoutes, setAllRoutes] = useState();
+  const { route, setRoute, getSinglePost, message } = useData();
+  const { loading, error, request } = useHttp();
+
+  useEffect(() => {
+    const fetchAllRoutes = async () => {
+      try {
+        const data = await request(
+          'https://data.calgary.ca/resource/hpnd-riq4',
+        );
+        setAllRoutes(data);
+      } catch (error) {}
+    };
+    fetchAllRoutes();
+  }, [request]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  useEffect(() => {
-    dispatch(fetchAllRoutes);
-  }, [fetchAllRoutes, dispatch]);
-
   return (
     <div className="constainer ">
       <div className="app p-4">
+        {(error || message) && <Message error={error} message={message} />}
         <h2>Feedback about whom?</h2>
         {loading ? (
           <p>Loading...</p>
@@ -36,16 +40,17 @@ export default function Page() {
           <AutoComplete handleChange={setRoute} suggestions={allRoutes} />
         )}
         <div>
-          <button
-            onClick={handleShow}
-            className="bg-transparent border border-indigo-500 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-2 px-4 rounded-full"
-          >
-            Add Comment
-          </button>
+          {route && allRoutes && (
+            <button
+              onClick={handleShow}
+              className="bg-transparent border border-indigo-500 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-2 px-4 rounded-full"
+            >
+              Add Comment
+            </button>
+          )}
         </div>
         <FormModal
           show={show}
-          isErrors={error}
           postData={postData}
           handleClose={handleClose}
           handleShow={handleShow}

@@ -13,7 +13,7 @@ export default function Auth() {
     clearMessage,
     setMessage,
   } = useHttp();
-  const { login, logout } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [form, setForm] = useState({
     email: '',
     password: '',

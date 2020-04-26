@@ -44,8 +44,8 @@ export const useHttp = () => {
     request,
     loading,
     error,
-    clearError,
     message,
+    clearError,
     clearMessage,
     setMessage,
   };

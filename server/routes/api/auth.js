@@ -20,7 +20,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: 'Invalid data on register',
+          message: 'Invalid registration data',
         });
       }
       const { email, password } = req.body;
@@ -50,7 +50,7 @@ router.post(
 router.post(
   '/login',
   [
-    check('email', 'Email  invalid').normalizeEmail().isEmail(),
+    check('email', 'Email invalid').normalizeEmail().isEmail(),
     check('password', 'Password invalid').exists(),
   ],
   async (req, res) => {
@@ -59,7 +59,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: 'Invalid data on login',
+          message: 'Invalid login data',
         });
       }
 

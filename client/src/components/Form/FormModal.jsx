@@ -1,46 +1,49 @@
-import React, { useState } from "react";
-import Modal from "./Modal";
-import { useData } from "../../context/localStorage";
-import EditPostFormModal from "./EditPostFormModal";
+import React, { useState } from 'react';
+import Modal from './Modal';
+import { useData } from '../../context/localStateProvider';
+import EditPostFormModal from './EditPostFormModal';
 
-export default function FormModal({ show, handleClose, handleShow, postData }) {
-  const [name, setName] = useState("");
-  const [reason, setReason] = useState("");
-  const [comment, setComment] = useState("");
+const initialState = {
+  name: '',
+  comment: '',
+  reason: '',
+};
 
-  const { route, addPost } = useData();
+export default function FormModal({ show, handleClose, postData }) {
+  const [form, setForm] = useState(initialState);
+  const { route, addPost, setMessage } = useData();
+
+  const handleChange = ({ target }) => {
+    setForm({
+      ...form,
+      [target.name]: target.value,
+    });
+  };
 
   const clearFields = () => {
-    setName("");
-    setComment("");
-    setReason("");
+    setForm(initialState);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     const newPost = {
-      name: name,
-      reason: reason,
-      comment: comment,
-      route: route
+      ...form,
+      route: route,
     };
     addPost(newPost);
     handleClose();
     clearFields();
+    setMessage('Comment Added!');
   };
   return (
     <>
       <Modal
-        name={name}
-        reason={reason}
-        comment={comment}
+        form={form}
         show={show}
         route={route}
-        onSubmit={onSubmit}
-        setName={setName}
-        setReason={setReason}
-        setComment={setComment}
+        handleChange={handleChange}
         closeModal={handleClose}
+        onSubmit={onSubmit}
       />
       {show && postData && (
         <EditPostFormModal

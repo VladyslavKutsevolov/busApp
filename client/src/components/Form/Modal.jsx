@@ -1,22 +1,12 @@
-import React from "react";
+import React from 'react';
 
-function Modal({
-  name,
-  reason,
-  comment,
-  show,
-  closeModal,
-  route,
-  onSubmit,
-  setName,
-  setReason,
-  setComment
-}) {
+function Modal({ show, closeModal, route, handleChange, form, onSubmit }) {
+  const { name, reason, comment } = form;
   return (
     <>
       <div
         className={`modal opacity-${show ? 1 : 0} pointer-events-${
-          show ? "auto" : "none"
+          show ? 'auto' : 'none'
         } fixed w-full h-full top-0 left-0 flex items-center justify-center`}
       >
         <div
@@ -53,7 +43,7 @@ function Modal({
                 <label className="block mb-3" htmlFor="name">
                   <span className="text-gray-700">Name:</span>
                   <input
-                    onChange={({ target }) => setName(target.value)}
+                    onChange={handleChange}
                     id="name"
                     value={name}
                     name="name"
@@ -64,7 +54,7 @@ function Modal({
                 <label className="block mb-3">
                   <span className="text-gray-700">Select Reason</span>
                   <select
-                    onChange={({ target }) => setReason(target.value)}
+                    onChange={handleChange}
                     name="reason"
                     value={reason}
                     className="shadow  border form-select block w-full mt-1"
@@ -77,7 +67,7 @@ function Modal({
                 <label htmlFor="comment" className="block">
                   <span className="text-gray-700 mb-2">You Comment</span>
                   <textarea
-                    onChange={({ target }) => setComment(target.value)}
+                    onChange={handleChange}
                     className="block shadow border rounded text-grey-darkest flex-1 p-2 m-1 w-full h-24"
                     name="comment"
                     value={comment}
