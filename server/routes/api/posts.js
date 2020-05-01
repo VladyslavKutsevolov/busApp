@@ -23,6 +23,7 @@ router.post(
     check('name', 'Name is required!').notEmpty(),
     check('reason', 'Reason is required!').notEmpty(),
   ],
+  auth,
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -45,6 +46,7 @@ router.post(
 
       res.json(newPost);
     } catch (error) {
+      console.log(error);
       res.status(500).json({ message: 'Fail to create a comment' });
     }
   },
@@ -53,15 +55,16 @@ router.post(
 router.delete('/:id', auth, async (req, res) => {
   try {
     const posts = await Post.findById(req.params.id);
+    console.log(req.user);
     await posts.remove();
-    res.json({ message: 'Post deleted' });
+    res.json({ message: 'Post deleted', userId: req.user.userId });
   } catch (error) {
     res.status(500).json({ message: 'Fail to delete comment' });
   }
 });
 
 // Edit Post
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     res.json(post);

@@ -4,12 +4,14 @@ import axios from 'axios';
 import { useThunkReducer } from '../hooks/useThunkReducer';
 import { DELETE_POST, ADD_POST, GET_SINGLE_POST, UPDATE_POST } from './types';
 import { useHttp } from '../hooks/http.hook';
+import { AuthContext } from './AuthContext';
 
 const LocalStorageContext = createContext();
 const LocalStateProvider = LocalStorageContext.Provider;
 
 function StateProvider({ children }) {
   const [route, setRoute] = useState('');
+  const auth = useContext(AuthContext);
   const { error, clearError, clearMessage, setMessage, message } = useHttp();
   const [state, dispatch] = useThunkReducer(AppReducer, { allPosts: [] });
 
@@ -20,7 +22,12 @@ function StateProvider({ children }) {
 
   const deletePost = async (id) => {
     try {
-      await axios.delete(`/api/posts/${id}`);
+      const response = await axios.delete(`/api/posts/${id}`, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      });
+      const data = JSON.parse(localStorage.getItem('userData'));
+      console.log(response.data.userId);
+      console.log(data.token);
       await dispatch({
         type: DELETE_POST,
         payload: id,
@@ -31,14 +38,17 @@ function StateProvider({ children }) {
 
   const addPost = async (post) => {
     try {
-      const response = await axios.post('/api/posts', post);
+      const response = await axios.post('/api/posts', post, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      });
       await dispatch({
         type: ADD_POST,
         payload: response.data,
       });
-      setMessage('Commment Added!');
+      setMessage(response.message);
     } catch (error) {}
   };
+
   const getSinglePost = async (id) => {
     try {
       const response = await axios.get(`/api/posts/edit/${id}`);
@@ -51,7 +61,9 @@ function StateProvider({ children }) {
 
   const updatePost = async (id, post) => {
     try {
-      const response = await axios.post(`/api/posts/edit/${id}`, post);
+      const response = await axios.post(`/api/posts/edit/${id}`, post, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      });
       await dispatch({
         type: UPDATE_POST,
         payload: response.data,
