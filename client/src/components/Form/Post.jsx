@@ -3,7 +3,7 @@ import { useData } from '../../context/localStateProvider';
 
 export default function Post({ posts, getPostData, fetchPostData, route }) {
   const { deletePost, state } = useData();
-  getPostData(state.post);
+  getPostData(state.present.post);
 
   return (
     <div className="grid grid-cols-2 gap-2 mt-5 sm:grid-cols-2 md:grid-cols-3">

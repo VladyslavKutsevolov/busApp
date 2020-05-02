@@ -1,19 +1,40 @@
-import React, { useContext, createContext, useState, useEffect } from 'react';
+import React, {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
-import { useThunkReducer } from '../hooks/useThunkReducer';
 import { DELETE_POST, ADD_POST, GET_SINGLE_POST, UPDATE_POST } from './types';
 import { useHttp } from '../hooks/http.hook';
 import { AuthContext } from './AuthContext';
+import { useUndoRedoReducer } from '../hooks/undoRedo.hook';
 
 const LocalStorageContext = createContext();
 const LocalStateProvider = LocalStorageContext.Provider;
+
+const initialState = {
+  allPosts: [],
+};
 
 function StateProvider({ children }) {
   const [route, setRoute] = useState('');
   const auth = useContext(AuthContext);
   const { error, clearError, clearMessage, setMessage, message } = useHttp();
-  const [state, dispatch] = useThunkReducer(AppReducer, { allPosts: [] });
+  const [state, dispatch] = useUndoRedoReducer(AppReducer, initialState);
+
+  const isPast = !!state.past.length;
+  const isFuture = !!state.future.length;
+
+  const undo = useCallback(() => {
+    dispatch({ type: 'UNDO' });
+  }, [dispatch]);
+
+  const redo = useCallback(() => {
+    dispatch({ type: 'REDO' });
+  }, [dispatch]);
 
   useEffect(() => {
     clearError();
@@ -51,7 +72,9 @@ function StateProvider({ children }) {
 
   const getSinglePost = async (id) => {
     try {
-      const response = await axios.get(`/api/posts/edit/${id}`);
+      const response = await axios.get(`/api/posts/edit/${id}`, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      });
       await dispatch({
         type: GET_SINGLE_POST,
         payload: response.data,
@@ -83,6 +106,10 @@ function StateProvider({ children }) {
     dispatch,
     message,
     setMessage,
+    undo,
+    redo,
+    isPast,
+    isFuture,
   };
 
   return <LocalStateProvider value={values}>{children}</LocalStateProvider>;

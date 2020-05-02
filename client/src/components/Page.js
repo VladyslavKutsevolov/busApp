@@ -52,6 +52,7 @@ export default function Page() {
         <FormModal
           show={show}
           postData={postData}
+          getPostData={getPostData}
           handleClose={handleClose}
           handleShow={handleShow}
         />

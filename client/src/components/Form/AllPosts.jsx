@@ -14,8 +14,8 @@ export default function AllPosts({
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(3);
   const { request, loading } = useHttp();
-  const { state, dispatch } = useData();
-  const { allPosts } = state;
+  const { state, dispatch, undo, redo, isPast, isFuture } = useData();
+  const { allPosts } = state.present;
 
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
@@ -38,6 +38,12 @@ export default function AllPosts({
 
   return (
     <div>
+      <button disabled={!isPast} onClick={undo}>
+        Undo
+      </button>
+      <button disabled={!isFuture} onClick={redo}>
+        Redo
+      </button>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -49,11 +55,11 @@ export default function AllPosts({
           showEditForm={handleShow}
         />
       )}
-      <Pagination
-        totalPosts={allPosts.length}
+      {/* <Pagination
+         totalPosts={allPosts.length}
         postPerPage={postPerPage}
         paginate={paginate}
-      />
+      /> */}
     </div>
   );
 }
