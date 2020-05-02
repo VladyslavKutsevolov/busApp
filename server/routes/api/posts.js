@@ -55,7 +55,6 @@ router.post(
 router.delete('/:id', auth, async (req, res) => {
   try {
     const posts = await Post.findById(req.params.id);
-    console.log(req.user);
     await posts.remove();
     res.json({ message: 'Post deleted', userId: req.user.userId });
   } catch (error) {
