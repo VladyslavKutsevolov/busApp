@@ -2,20 +2,36 @@ import React, { useState } from 'react';
 import { useData } from '../../context/localStateProvider';
 
 function EditPostFormModal({ show, closeModal, postData }) {
-  const [name, setName] = useState('');
-  const [reason, setReason] = useState('');
-  const [comment, setComment] = useState('');
+  const [form, setForm] = useState({
+    name: '' || postData.name,
+    comment: '' || postData.comment,
+    reason: '' || postData.reason,
+  });
   const { route, updatePost } = useData();
+
+  const clearFields = () => {
+    setForm({
+      name: '',
+      comment: '',
+      reason: '',
+    });
+  };
+
+  const handleChange = ({ target }) => {
+    setForm({
+      ...form,
+      [target.name]: target.value,
+    });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     const newPost = {
-      name: name || postData.name,
-      reason: reason || postData.reason,
-      comment: comment || postData.comment,
+      ...form,
       route: route,
     };
     updatePost(postData._id, newPost);
+    clearFields();
     closeModal();
   };
   return (
@@ -59,7 +75,7 @@ function EditPostFormModal({ show, closeModal, postData }) {
                 <label className="block mb-3" htmlFor="name">
                   <span className="text-gray-700">Name:</span>
                   <input
-                    onChange={({ target }) => setName(target.value)}
+                    onChange={handleChange}
                     id="name"
                     name="name"
                     defaultValue={postData.name}
@@ -70,7 +86,7 @@ function EditPostFormModal({ show, closeModal, postData }) {
                 <label className="block mb-3">
                   <span className="text-gray-700">Select</span>
                   <select
-                    onChange={({ target }) => setReason(target.value)}
+                    onChange={handleChange}
                     name="reason"
                     defaultValue={postData.reason}
                     className="shadow  border form-select block w-full mt-1"
@@ -83,7 +99,7 @@ function EditPostFormModal({ show, closeModal, postData }) {
                 <label htmlFor="comment" className="block">
                   <span className="text-gray-700 mb-2">You Comment</span>
                   <textarea
-                    onChange={({ target }) => setComment(target.value)}
+                    onChange={handleChange}
                     className="block shadow border rounded text-grey-darkest flex-1 p-2 m-1 w-full h-24"
                     name="comment"
                     defaultValue={postData.comment}

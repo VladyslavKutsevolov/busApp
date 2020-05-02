@@ -11,7 +11,7 @@ const initialState = {
 
 export default function FormModal({ show, handleClose, postData }) {
   const [form, setForm] = useState(initialState);
-  const { route, addPost, setMessage } = useData();
+  const { route, addPost } = useData();
 
   const handleChange = ({ target }) => {
     setForm({
@@ -33,7 +33,6 @@ export default function FormModal({ show, handleClose, postData }) {
     addPost(newPost);
     handleClose();
     clearFields();
-    setMessage('Comment Added!');
   };
   return (
     <>
@@ -48,7 +47,6 @@ export default function FormModal({ show, handleClose, postData }) {
       {show && postData && (
         <EditPostFormModal
           postData={postData}
-          clearFields={clearFields}
           closeModal={handleClose}
           show={show}
         />
