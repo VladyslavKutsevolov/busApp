@@ -17,9 +17,13 @@ export default function AllPosts({
   const { state, dispatch, undo, redo, isPast, isFuture } = useData();
   const { allPosts } = state.present;
 
+  const filteredByRouteName = allPosts.filter((post) => post.route === route);
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = allPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filteredByRouteName.slice(
+    indexOfFirstPost,
+    indexOfLastPost,
+  );
 
   const paginate = (pageNum) => setCurrentPage(pageNum);
 
@@ -55,11 +59,11 @@ export default function AllPosts({
           showEditForm={handleShow}
         />
       )}
-      {/* <Pagination
-         totalPosts={allPosts.length}
+      <Pagination
+        totalPosts={filteredByRouteName.length}
         postPerPage={postPerPage}
         paginate={paginate}
-      /> */}
+      />
     </div>
   );
 }

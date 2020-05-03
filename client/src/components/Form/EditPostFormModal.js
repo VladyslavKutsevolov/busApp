@@ -31,8 +31,8 @@ function EditPostFormModal({ show, closeModal, postData }) {
       route: route,
     };
     updatePost(postData._id, newPost);
-    clearFields();
     closeModal();
+    clearFields();
   };
   return (
     <>

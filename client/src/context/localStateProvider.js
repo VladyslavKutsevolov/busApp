@@ -53,7 +53,7 @@ function StateProvider({ children }) {
         type: DELETE_POST,
         payload: id,
       });
-      setMessage('Commnent Deleted!');
+      setMessage(response.message);
     } catch (error) {}
   };
 
@@ -92,7 +92,7 @@ function StateProvider({ children }) {
         payload: response.data,
         id: id,
       });
-      setMessage('Comment Apdated!');
+      setMessage(response.message);
     } catch (error) {}
   };
   const values = {
