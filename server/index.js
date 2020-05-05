@@ -1,8 +1,8 @@
 const express = require('express');
+require('dotenv').config();
 
 const app = express();
 const mongoose = require('mongoose');
-const config = require('config');
 
 app.use(express.json({ extended: true }));
 
@@ -10,16 +10,15 @@ app.use(express.json({ extended: true }));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/posts', require('./routes/api/posts'));
 
-const PORT = config.get('PORT') || 5000;
+const PORT = process.env.PORT || 5000;
 
 async function start() {
   try {
-    await mongoose.connect(config.get('mongoURI'), {
+    await mongoose.connect(process.env.mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-
     app.listen(PORT, () => console.log(`Server listen on port: ${PORT}`));
   } catch (error) {
     console.log('Server Error', error.message);

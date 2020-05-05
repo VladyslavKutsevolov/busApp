@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import MapGL from "react-map-gl";
-import PolylineOverlay from "./PolylineOverlay";
+import React, { useState } from 'react';
+import MapGL from 'react-map-gl';
+import PolylineOverlay from './PolylineOverlay';
 
 function RouteMap({ allRoutes, route }) {
   const [viewport, setViewport] = useState({
-    width: "100%",
+    width: '100%',
     height: 300,
     latitude: 51.05011,
     longitude: -114.08529,
-    zoom: 9
+    zoom: 9,
   });
 
   return (

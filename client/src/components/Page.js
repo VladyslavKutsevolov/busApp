@@ -10,6 +10,7 @@ import Message from './Form/Message';
 export default function Page() {
   const [show, setShow] = useState(false);
   const [postData, getPostData] = useState();
+  const [edit, showEditForm] = useState(false);
   const [allRoutes, setAllRoutes] = useState();
   const { route, setRoute, getSinglePost, message } = useData();
   const { loading, error, request } = useHttp();
@@ -50,6 +51,8 @@ export default function Page() {
           )}
         </div>
         <FormModal
+          edit={edit}
+          showEditForm={showEditForm}
           show={show}
           postData={postData}
           getPostData={getPostData}
@@ -59,6 +62,7 @@ export default function Page() {
         {route && (
           <AllPosts
             postData={postData}
+            showEditForm={showEditForm}
             getSinglePost={getSinglePost}
             getPostData={getPostData}
             route={route}

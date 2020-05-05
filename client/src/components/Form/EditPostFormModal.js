@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '../../context/localStateProvider';
 
-function EditPostFormModal({ show, closeModal, postData }) {
+function EditPostFormModal({ edit, closeModal, postData }) {
   const [form, setForm] = useState({
     name: '' || postData.name,
     comment: '' || postData.comment,
@@ -31,14 +31,14 @@ function EditPostFormModal({ show, closeModal, postData }) {
       route: route,
     };
     updatePost(postData._id, newPost);
-    closeModal();
     clearFields();
+    closeModal();
   };
   return (
     <>
       <div
-        className={`modal opacity-${show ? 1 : 0} pointer-events-${
-          show ? 'auto' : 'none'
+        className={`modal opacity-${edit ? 1 : 0} pointer-events-${
+          edit ? 'auto' : 'none'
         } fixed w-full h-full top-0 left-0 flex items-center justify-center`}
       >
         <div
@@ -78,7 +78,7 @@ function EditPostFormModal({ show, closeModal, postData }) {
                     onChange={handleChange}
                     id="name"
                     name="name"
-                    defaultValue={postData.name}
+                    value={form.name}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Your name"
                   />
@@ -88,7 +88,7 @@ function EditPostFormModal({ show, closeModal, postData }) {
                   <select
                     onChange={handleChange}
                     name="reason"
-                    defaultValue={postData.reason}
+                    value={form.reason}
                     className="shadow  border form-select block w-full mt-1"
                   >
                     <option></option>
@@ -102,7 +102,7 @@ function EditPostFormModal({ show, closeModal, postData }) {
                     onChange={handleChange}
                     className="block shadow border rounded text-grey-darkest flex-1 p-2 m-1 w-full h-24"
                     name="comment"
-                    defaultValue={postData.comment}
+                    value={form.comment}
                     id="comment"
                     cols="30"
                     rows="10"

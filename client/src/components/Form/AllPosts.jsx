@@ -10,6 +10,7 @@ export default function AllPosts({
   handleShow,
   getPostData,
   getSinglePost,
+  showEditForm,
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(3);
@@ -29,7 +30,7 @@ export default function AllPosts({
 
   const fetchPostData = (id) => {
     getSinglePost(id);
-    handleShow();
+    showEditForm(true);
   };
 
   useEffect(() => {
@@ -42,12 +43,24 @@ export default function AllPosts({
 
   return (
     <div>
-      <button disabled={!isPast} onClick={undo}>
-        Undo
-      </button>
-      <button disabled={!isFuture} onClick={redo}>
-        Redo
-      </button>
+      {currentPosts && (
+        <div className="flex justify-center">
+          <button
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l mx-1"
+            disabled={!isPast}
+            onClick={undo}
+          >
+            Undo
+          </button>
+          <button
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+            disabled={!isFuture}
+            onClick={redo}
+          >
+            Redo
+          </button>
+        </div>
+      )}
       {loading ? (
         <p>Loading...</p>
       ) : (

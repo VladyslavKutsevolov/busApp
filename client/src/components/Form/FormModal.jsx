@@ -9,7 +9,13 @@ const initialState = {
   reason: '',
 };
 
-export default function FormModal({ show, handleClose, postData }) {
+export default function FormModal({
+  show,
+  handleClose,
+  postData,
+  edit,
+  showEditForm,
+}) {
   const [form, setForm] = useState(initialState);
   const { route, addPost } = useData();
 
@@ -23,6 +29,8 @@ export default function FormModal({ show, handleClose, postData }) {
   const clearFields = () => {
     setForm(initialState);
   };
+
+  const closeModal = () => showEditForm(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -44,11 +52,11 @@ export default function FormModal({ show, handleClose, postData }) {
         closeModal={handleClose}
         onSubmit={onSubmit}
       />
-      {show && postData && (
+      {edit && postData && (
         <EditPostFormModal
           postData={postData}
-          closeModal={handleClose}
-          show={show}
+          closeModal={closeModal}
+          edit={edit}
         />
       )}
     </>
