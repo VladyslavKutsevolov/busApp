@@ -1,22 +1,64 @@
-import React, { useState } from "react";
-import Modal from "./Modal";
+import React, { useState } from 'react';
+import Modal from './Modal';
+import { useData } from '../../context/localStateProvider';
+import EditPostFormModal from './EditPostFormModal';
 
-export default function FormModal({ route }) {
-  const [show, setShow] = useState(false);
+const initialState = {
+  name: '',
+  comment: '',
+  reason: '',
+};
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+export default function FormModal({
+  show,
+  handleClose,
+  postData,
+  edit,
+  showEditForm,
+}) {
+  const [form, setForm] = useState(initialState);
+  const { route, addPost } = useData();
+
+  const handleChange = ({ target }) => {
+    setForm({
+      ...form,
+      [target.name]: target.value,
+    });
+  };
+
+  const clearFields = () => {
+    setForm(initialState);
+  };
+
+  const closeModal = () => showEditForm(false);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const newPost = {
+      ...form,
+      route: route,
+    };
+    addPost(newPost);
+    handleClose();
+    clearFields();
+  };
   return (
     <>
-      <div>
-        <button
-          onClick={handleShow}
-          className="bg-transparent border border-gray-500 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-2 px-4 rounded-full"
-        >
-          Add Comment
-        </button>
-      </div>
-      <Modal route={route} show={show} closeModal={handleClose} />
+      <Modal
+        form={form}
+        show={show}
+        route={route}
+        handleChange={handleChange}
+        closeModal={handleClose}
+        onSubmit={onSubmit}
+      />
+      {edit && postData && (
+        <EditPostFormModal
+          postData={postData}
+          closeModal={closeModal}
+          edit={edit}
+        />
+      )}
     </>
   );
 }

@@ -1,12 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useData } from '../../context/localStateProvider';
 
-function Modal({ show, closeModal, route, handleChange, form, onSubmit }) {
-  const { name, reason, comment } = form;
+function EditPostFormModal({ edit, closeModal, postData }) {
+  const [form, setForm] = useState({
+    name: '' || postData.name,
+    comment: '' || postData.comment,
+    reason: '' || postData.reason,
+  });
+  const { route, updatePost } = useData();
+
+  const clearFields = () => {
+    setForm({
+      name: '',
+      comment: '',
+      reason: '',
+    });
+  };
+
+  const handleChange = ({ target }) => {
+    setForm({
+      ...form,
+      [target.name]: target.value,
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const newPost = {
+      ...form,
+      route: route,
+    };
+    updatePost(postData._id, newPost);
+    clearFields();
+    closeModal();
+  };
   return (
     <>
       <div
-        className={`modal opacity-${show ? 1 : 0} pointer-events-${
-          show ? 'auto' : 'none'
+        className={`modal opacity-${edit ? 1 : 0} pointer-events-${
+          edit ? 'auto' : 'none'
         } fixed w-full h-full top-0 left-0 flex items-center justify-center`}
       >
         <div
@@ -38,25 +70,25 @@ function Modal({ show, closeModal, route, handleChange, form, onSubmit }) {
             </div>
 
             {/* <!--Body--> */}
-            <form onSubmit={onSubmit} method="POST" action="/api/post">
+            <form onSubmit={onSubmit} method="POST" action="/api/posts/edit">
               <div className="container rounded px-8 pt-6 pb-8">
                 <label className="block mb-3" htmlFor="name">
                   <span className="text-gray-700">Name:</span>
                   <input
                     onChange={handleChange}
                     id="name"
-                    value={name}
                     name="name"
+                    value={form.name}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Your name"
                   />
                 </label>
                 <label className="block mb-3">
-                  <span className="text-gray-700">Select Reason</span>
+                  <span className="text-gray-700">Select</span>
                   <select
                     onChange={handleChange}
                     name="reason"
-                    value={reason}
+                    value={form.reason}
                     className="shadow  border form-select block w-full mt-1"
                   >
                     <option></option>
@@ -70,7 +102,7 @@ function Modal({ show, closeModal, route, handleChange, form, onSubmit }) {
                     onChange={handleChange}
                     className="block shadow border rounded text-grey-darkest flex-1 p-2 m-1 w-full h-24"
                     name="comment"
-                    value={comment}
+                    value={form.comment}
                     id="comment"
                     cols="30"
                     rows="10"
@@ -83,6 +115,7 @@ function Modal({ show, closeModal, route, handleChange, form, onSubmit }) {
               <div className="flex justify-end pt-2">
                 <button
                   type="submit"
+                  onClick={(e) => onSubmit(e)}
                   className="px-4 bg-transparent border p-3 rounded-lg cursor-pointer text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2"
                 >
                   Action
@@ -102,4 +135,4 @@ function Modal({ show, closeModal, route, handleChange, form, onSubmit }) {
   );
 }
 
-export default Modal;
+export default EditPostFormModal;

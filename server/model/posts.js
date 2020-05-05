@@ -1,26 +1,26 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const newPost = mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   reason: {
     type: String,
-    required: true
+    required: true,
   },
   comment: {
     type: String,
-    required: true
+    required: true,
   },
   route: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now(),
+  },
 });
 
-let Post = (module.exports = mongoose.model("Post", newPost));
+module.exports = mongoose.model('Post', newPost);
